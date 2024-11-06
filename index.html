@@ -90,14 +90,25 @@
             <button onclick="appendToScreen('0')" style="grid-column: span 2;">0</button>
             <button onclick="appendToScreen('.')">.</button>
             <button class="equal" onclick="calculate()">=</button>
+            <button onclick="deleteLast()">⌫</button>
         </div>
     </div>
 
+    <audio id="loveAudio" src="https://files.catbox.moe/4em2sx.opus" preload="auto"></audio>
+
     <script>
         let screenValue = '0';
+        const audio = document.getElementById("loveAudio");
 
         function updateScreen() {
-            document.getElementById('screen').innerText = screenValue;
+            const screen = document.getElementById('screen');
+            screen.innerText = screenValue;
+            if (screenValue === 'I LOVE YOU ❤️') {
+                audio.play();
+            } else {
+                audio.pause();
+                audio.currentTime = 0;
+            }
         }
 
         function appendToScreen(value) {
@@ -106,6 +117,11 @@
             } else {
                 screenValue += value;
             }
+            updateScreen();
+        }
+
+        function deleteLast() {
+            screenValue = screenValue.length > 1 ? screenValue.slice(0, -1) : '0';
             updateScreen();
         }
 
